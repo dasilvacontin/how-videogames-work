@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./index.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap"
+    />
+
+    <style>
+      @font-face {
+        font-family: "Not Jam UI Condensed 16";
+        src: url("./public/Not Jam UI Condensed 16.ttf");
+        font-weight: 400;
+      }
+    </style>
+
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="how-a-game-works-done">
+      <div class="frame-parent">
+        <div class="frame-wrapper">
+          <img class="frame-child" alt="" src="./public/logic-gamestate@2x.png" id="logicReadsModifiesGameState"/>
+        </div>
+        <div class="frame-group">
+          <div class="blackbox-parent">
+            <div class="blackbox" id="gameStateBoard">
+              <div class="frame-container">
+                <div class="parent">
+                  <div class="div">📀</div>
+                  <div class="game-state">Game State</div>
+                </div>
+                <button class="action" id="resetStateButton">
+                  <div class="reset">
+                    <span class="reset1">Reset </span>
+                    <span class="span">🔁</span>
+                  </div>
+                </button>
+              </div>
+
+              <textarea id="jsonGameState" style="display: none; height: 181px; background: #242424; border: none; color: white; resize: none" contenteditable="true"></textarea>
+              <li class="player-is-at-position-x-3-y-parent" id="humanGameState" style="height: 181px">
+                <div class="player-is-at-container">
+                  <ul class="player-is-at-position-x-3-y">
+                    <li>
+                      <span class="player">Player</span>
+                      <span> is at position (x: </span>
+                      <span class="span1 no-whitespace-after" contenteditable="true" id="playerX">3</span>
+                      <span class="y">, y: </span>
+                      <span class="span1 no-whitespace-after" contenteditable="true" id="playerY">4</span>
+                      <span class="y">) and has </span>
+                      <span class="span1" contenteditable="true" id="playerHP">10</span>
+                      <span class="y"> health</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="player-is-at-container">
+                  <ul class="player-is-at-position-x-3-y">
+                    <li>
+                      <span class="enemy">Enemy</span>
+                      <span> is at position (x: </span>
+                      <span class="span1 no-whitespace-after" contenteditable="true" id="enemyX">10</span>
+                      <span class="y">, y: </span>
+                      <span class="span1 no-whitespace-after" contenteditable="true" id="enemyY">10</span>
+                      <span class="y">) and has </span>
+                      <span class="span1" contenteditable="true" id="enemyHP">5</span>
+                      <span class="y"> health</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="player-is-at-container">
+                  <ul class="player-is-at-position-x-3-y">
+                    <li>
+                      <span>Tree is at position (x: </span>
+                      <span class="span1 no-whitespace-after" contenteditable="true" id="tree0X" >6</span>
+                      <span class="y">, y: </span>
+                      <span class="span1 no-whitespace-after" contenteditable="true" id="tree0Y">4</span>
+                      <span class="y">)</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="player-is-at-container">
+                  <ul class="player-is-at-position-x-3-y">
+                    <li>
+                      <span>Tree is at position (x: </span>
+                      <span class="span1 no-whitespace-after" contenteditable="true" id="tree1X">12</span>
+                      <span class="y">, y: </span>
+                      <span class="span1 no-whitespace-after" contenteditable="true" id="tree1Y">7</span>
+                      <span class="y">)</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="game-status-is-container">
+                  <ul class="player-is-at-position-x-3-y">
+                    <li>
+                      <span class="game-status">Game status</span>
+                      <span class="y"> is </span>
+                      <span id="gameStatus" contenteditable="true">"in progress"</span>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <div class="footer">
+                <div class="devhrp">
+                  <input class="frame-input checkbox-container" type="checkbox" id="jsonModeCheckbox" />
+                </div>
+                
+
+                <div class="game-state" style="top: -1px">JSON mode</div>
+              </div>
+            </div>
+            <img class="frame-item" alt="" src="./public/renderer-reads-gamestate@2x.png" width="80" id="rendererReadsGameState"/>
+          </div>
+          <div class="content">
+            <div class="boxcontent" id="screen">
+              <canvas class="boxcontent-child" width="506" height="506"></canvas>
+              <div class="frame-div">
+                <div class="frame-parent1">
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                </div>
+                <div class="screen-wrapper">
+                  <div class="screen">Screen</div>
+                </div>
+                <div class="frame-parent1">
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                  <div class="ellipse-parent">
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                    <div class="frame-inner"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <img class="content-child" alt="" src="./public/renderer-screen@2x.png" id="rendererModifiesScreen"/>
+
+            <div class="content-inner" id="rendererBoard">
+              <div class="frame-wrapper1">
+                <div class="frame-parent3">
+                  <div class="group">
+                    <div class="game-state">🎨</div>
+                    <div class="renderer-graphics">Renderer</div>
+                  </div>
+                  <div class="art-style-parent">
+                    <div class="game-state">Art style:</div>
+                    <div class="select-wrapper">
+                      <select class="kenny-parent" id="artStyleSelect">
+                        <option value="Kenney">Kenney</option>
+                        <option value="Demo">Abstract</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sidebar">
+            <div class="frame-parent4" id="logicBoard">
+              <div class="frame-parent5">
+                <div class="container">
+                  <div class="game-state">📋</div>
+                  <div class="renderer-graphics">Logic</div>
+                </div>
+
+                <div class="slow-mode-container">
+                  <!--
+                  <div class="devhrp">
+                    <input class="frame-input checkbox-container" type="checkbox" id="slowModeCheckbox" />
+                  </div>
+                  <div class="game-state" style="top: -1px">Slow mode</div>
+                -->
+                  <div class="select-wrapper">
+                    <select class="kenny-parent" id="executionSpeedSelect">
+                      <option value="fast">Fast execution</option>
+                      <option value="slow">Slow execution</option>
+                      <option value="snail">Snail execution</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button class="action1" id="pauseButton">
+                  <div class="pause">
+                    <span class="reset1">Start </span>
+                    <span class="span">▶️</span>
+                  </div>
+                </button>
+              </div>
+              <li class="view">
+                <div class="parent1" id="rpgGameRule1">
+                  <div class="div3">1.</div>
+                  <div class="screen">
+                    <span>If alive, move the </span>
+                    <span class="player">Player</span>
+                    <span> </span>
+                    <span class="span1">1</span>
+                    <span> space according to arrow keys input</span>
+                  </div>
+                </div>
+
+                <div class="parent1" id="rpgGameRule2">
+                  <div class="div3">2.</div>
+                  <div class="screen">
+                    <span>If the </span>
+                    <span class="enemy">Enemy</span>
+                    <span> is </span>
+                    <span class="span1">1</span>
+                    <span> space away from the </span>
+                    <span class="player no-whitespace-after">Player</span>
+                    <span>, and both are alive, reduce the </span>
+                    <span class="player no-whitespace-after">Player</span>
+                    <span>’s health by </span>
+                    <span class="span1">1</span>
+                  </div>
+                </div>
+
+                <div class="parent1" id="rpgGameRule3">
+                  <div class="div3">3.</div>
+                  <div class="screen">
+                    <span>If alive, move the </span>
+                    <span class="enemy">Enemy</span>
+                    <span> </span>
+                    <span class="span1">1</span>
+                    <span> space towards the </span>
+                    <span class="player">Player</span>
+                    <span> (including diagonally)</span>
+                  </div>
+                </div>
+
+                <div class="parent1" id="rpgGameRule4">
+                  <div class="div3">4.</div>
+                  <div class="screen">
+                    <p class="if-the-player-is-1-space-away">
+                      <span class="if-the">If the </span>
+                      <span class="player">Player</span>
+                      <span class="if-the"> is </span>
+                      <span class="span1">1</span>
+                      <span class="if-the"> space away from the </span>
+                      <span class="enemy no-whitespace-after">Enemy</span>
+                      <span>, both are alive, and the spacebar key is pressed,</span>
+                    </p>
+                    <p class="if-the-player-is-1-space-away">
+                      <span>reduce the </span>
+                      <span class="enemy no-whitespace-after">Enemy</span>
+                      <span class="if-the">’s health by </span>
+                      <span class="span1">1</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="parent1" id="rpgGameRule5">
+                  <div class="div3">5.</div>
+                  <div class="screen">
+                    <p class="if-the-player-is-1-space-away">
+                      <span class="if-the">If the </span>
+                      <span class="player  no-whitespace-after">Player</span>
+                      <span>’s health is </span>
+                      <span class="span1">0</span>
+                      <span class="if-the"> or less,</span>
+                    </p>
+                    <p class="set-the-game-status-to-lost">
+                      <span class="if-the">set the </span>
+                      <span>Game status</span>
+                      <span class="if-the"> to </span>
+                      <span class="lost">“lost”</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="parent1" id="rpgGameRule6">
+                  <div class="div3">6.</div>
+                  <div class="screen">
+                    <p class="if-the-player-is-1-space-away">
+                      <span>Otherwise if the </span>
+                      <span class="enemy  no-whitespace-after">Enemy</span>
+                      <span class="if-the">’s health is </span>
+                      <span class="span1">0</span>
+                      <span class="if-the">or less,</span>
+                    </p>
+                    <p class="set-the-game-status-to-lost">
+                      <span class="if-the">set the </span>
+                      <span>Game status</span>
+                      <span class="if-the"> to </span>
+                      <span class="lost">“won”</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="parent1" id="rpgGameRule7">
+                  <div class="div3">7.</div>
+                  <div class="screen">
+                    <!-- <p class="if-the-player-is-1-space-away">
+                      <span class="if-the">If </span>
+                      <span class="game-status">Game status</span>
+                      <span class="if-the"> is </span>
+                      <span class="lost  no-whitespace-after">“in progress”</span>
+                      <span>,</span>
+                    </p> -->
+                    <p class="if-the-player-is-1-space-away">
+                      <span>Execute Logic again in </span>
+                      <span class="span1">1</span>
+                      <span class="if-the"> second</span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </div>
+            <img class="content-child" alt="" src="./public/renderer-screen@2x.png" style="" id="logicReadsInput"/>
+
+            <div class="frame-parent6" id="inputBoard">
+              <div class="frame-parent7">
+                <div class="frame-parent8">
+                  <button class="arrow-left-parent" id="ArrowLeft">
+                    <div class="arrow-left">
+                      <img
+                        class="arrow-left-icon"
+                        alt=""
+                        src="./public/arrow-left.svg"
+                      />
+                      <img
+                      class="arrow-left-icon active"
+                      alt=""
+                      src="./public/arrow-left-active.svg"
+                    />
+                    </div>
+                    <div class="t">t</div>
+                  </button>
+                  <button class="arrow-drop-up-parent" id="ArrowUp">
+                    <div class="arrow-drop-up">
+                      <img
+                        class="arrow-drop-up-icon"
+                        alt=""
+                        src="./public/arrow-drop-up.svg"
+                      />
+                      <img
+                      class="arrow-drop-up-icon active"
+                      alt=""
+                      src="./public/arrow-drop-up-active.svg"
+                    />
+                    </div>
+                    <div class="t1">t</div>
+                  </button>
+                </div>
+                <div class="input-wrapper">
+                  <div class="input">🎮 Input</div>
+                </div>
+                <div class="frame-parent9">
+                  <button class="arrow-drop-down-parent" id="ArrowDown">
+                    <div class="arrow-drop-up">
+                      <img
+                        class="arrow-drop-up-icon"
+                        alt=""
+                        src="./public/arrow-drop-down.svg"
+                      />
+                      <img
+                      class="arrow-drop-up-icon active"
+                      alt=""
+                      src="./public/arrow-drop-down-active.svg"
+                    />
+                    </div>
+                    <div class="t1">t</div>
+                  </button>
+                  <button class="arrow-right-parent" id="ArrowRight">
+                    <div class="arrow-right">
+                      <img
+                        class="arrow-left-icon"
+                        alt=""
+                        src="./public/arrow-right.svg"
+                      />
+                      <img
+                      class="arrow-left-icon active"
+                      alt=""
+                      src="./public/arrow-right-active.svg"
+                      />
+                    </div>
+                    <div class="t">t</div>
+                  </button>
+                </div>
+              </div>
+              <button class="spacebar-wrapper" id="Spacebar">
+                <div class="spacebar">spacebar</div>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div style="width: 100%; height: 42.5px"></div>
+      </div>
+    </div>
+  </body>
+</html>
