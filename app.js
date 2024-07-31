@@ -115,7 +115,7 @@ const inputBoard = document.getElementById('inputBoard');
 const logicReadsInput = document.getElementById('logicReadsInput');
 
 const boards = [screen, rendererBoard, rendererModifiesScreen, gameStateBoard, rendererReadsGameState, logicBoard, logicReadsModifiesGameState, inputBoard, logicReadsInput];
-let boardIndex = -1;
+let boardIndex = 8//-1;
 boards.forEach(el => {
     el.style.opacity = 0
     setTimeout(() => el.style.transition = `opacity 0.5s`, 100)
@@ -134,10 +134,14 @@ function handleBoardLogic (event) {
     if (boardIndex < -1) boardIndex = -1;
     console.log(boardIndex)
     if (boardIndex >= boards.length) boardIndex = boards.length - 1;
+    updateBoardVisibility();
+}
+function updateBoardVisibility () {
     boards.forEach((el, i) => {
         el.style.opacity = i <= boardIndex ? 1 : 0;
     })
 }
+updateBoardVisibility();
 
 const resetStateButton = document.getElementById('resetStateButton');
 resetStateButton.onclick = () => {
