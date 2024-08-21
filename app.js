@@ -6,6 +6,8 @@ function cloneObject (obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
+const isTeachingMode = localStorage.teachingMode
+
 const rpgState = {
     player: {
         x: 3,
@@ -115,7 +117,7 @@ const inputBoard = document.getElementById('inputBoard');
 const logicReadsInput = document.getElementById('logicReadsInput');
 
 const boards = [screen, rendererBoard, rendererModifiesScreen, gameStateBoard, rendererReadsGameState, logicBoard, logicReadsModifiesGameState, inputBoard, logicReadsInput];
-let boardIndex = 8//-1;
+let boardIndex = isTeachingMode ? -1 : 8
 boards.forEach(el => {
     el.style.opacity = 0
     setTimeout(() => el.style.transition = `opacity 0.5s`, 100)
@@ -176,9 +178,6 @@ function highlightRule (ruleNumber) {
         rpgGameRule.style.opacity = (Number(i) === ruleNumber) ? 1 : 0.5;
     })
 }
-
-ctx.drawImage(sprites.Grass, 0, 0, canvas.width, canvas.height);
-ctx.drawImage(sprites.Flowers, 0, 0, canvas.width, canvas.height);
 
 const SPRITE_SIZE = 32
 function render () {
